@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity
   }
 
   @Override public void onRefresh() {
-
     QuoteSyncJob.syncImmediately(this);
 
     if (!networkUp() && adapter.getItemCount() == 0) {
