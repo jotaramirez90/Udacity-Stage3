@@ -16,6 +16,7 @@ import butterknife.ButterKnife;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -146,6 +147,9 @@ public class DetailsActivity extends AppCompatActivity
     mLineChart.getAxisRight().setEnabled(false);
     mLineChart.getLegend().setEnabled(false);
     mLineChart.setGridBackgroundColor(Color.BLACK);
+    Description desc = new Description();
+    desc.setText("");
+    mLineChart.setDescription(desc);
     mLineChart.animateX(1000, Easing.EasingOption.Linear);
 
     pricesDataSet.setDrawCircles(false);
