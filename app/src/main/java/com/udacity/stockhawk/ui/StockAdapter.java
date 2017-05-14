@@ -31,11 +31,12 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
 
     dollarFormat = (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.US);
     dollarFormatWithPlus = (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.US);
-    dollarFormatWithPlus.setPositivePrefix("+$");
+    dollarFormatWithPlus.setPositivePrefix(
+        context.getResources().getString(R.string.prefix_dollar));
     percentageFormat = (DecimalFormat) NumberFormat.getPercentInstance(Locale.getDefault());
     percentageFormat.setMaximumFractionDigits(2);
     percentageFormat.setMinimumFractionDigits(2);
-    percentageFormat.setPositivePrefix("+");
+    percentageFormat.setPositivePrefix(context.getResources().getString(R.string.prefix_plus));
   }
 
   void setCursor(Cursor cursor) {
@@ -50,10 +51,8 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
   }
 
   @Override public StockViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-    View item = LayoutInflater.from(context).inflate(R.layout.list_item_quote, parent, false);
-
-    return new StockViewHolder(item);
+    return new StockViewHolder(
+        LayoutInflater.from(context).inflate(R.layout.list_item_quote, parent, false));
   }
 
   @Override public void onBindViewHolder(StockViewHolder holder, int position) {
@@ -98,9 +97,7 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
   class StockViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     @BindView(R.id.symbol) TextView symbol;
-
     @BindView(R.id.price) TextView price;
-
     @BindView(R.id.change) TextView change;
 
     StockViewHolder(View itemView) {

@@ -32,6 +32,9 @@ public class DetailsActivity extends AppCompatActivity
     implements LoaderManager.LoaderCallbacks<Cursor> {
 
   public static final String EXTRA_SYMBOL = "symbolExtra";
+  private static final String PATTERN_DATE = "MM/yyyy";
+  private static final String SPLIT_COMMA = ",";
+  private static final String SPLIT_JUMP = "\n";
   private static final int LOADER_ID = 0;
   private static String mSymbol;
 
@@ -75,8 +78,8 @@ public class DetailsActivity extends AppCompatActivity
       String currentPrice = cursor.getString(cursor.getColumnIndex(Contract.Quote.COLUMN_PRICE));
       float absoluteChange =
           cursor.getFloat(cursor.getColumnIndex(Contract.Quote.COLUMN_ABSOLUTE_CHANGE));
-      String percentageChange =
-          cursor.getString(cursor.getColumnIndex(Contract.Quote.COLUMN_PERCENTAGE_CHANGE));
+      StringBuilder percentageChange = new StringBuilder(
+          cursor.getString(cursor.getColumnIndex(Contract.Quote.COLUMN_PERCENTAGE_CHANGE)));
       String history = cursor.getString(cursor.getColumnIndex(Contract.Quote.COLUMN_HISTORY));
 
       if (absoluteChange >= 0) {
@@ -86,24 +89,25 @@ public class DetailsActivity extends AppCompatActivity
         mAbsTextView.setBackgroundResource(R.drawable.percent_change_pill_red);
         mChangeTextView.setBackgroundResource(R.drawable.percent_change_pill_red);
       }
-      mChangeTextView.setText(percentageChange + "%");
+      percentageChange.append(getResources().getString(R.string.details_percentage));
+      mChangeTextView.setText(percentageChange);
       mAbsTextView.setText(String.valueOf(absoluteChange));
       mPriceTextView.setText(currentPrice);
 
       ArrayList<Entry> prices = new ArrayList<>();
       ArrayList<String> dates = new ArrayList<>();
-      String[] historyElement = history.split("\n");
+      String[] historyElement = history.split(SPLIT_JUMP);
       float x = 0;
       for (int counter = historyElement.length - 1; counter >= 0; counter--) {
         String element = historyElement[counter];
-        String timestampInMills = element.split(",")[0];
-        String stringPriceWithLeadingSpace = element.split(",")[1];
+        String timestampInMills = element.split(SPLIT_COMMA)[0];
+        String stringPriceWithLeadingSpace = element.split(SPLIT_COMMA)[1];
         String stringPrice = stringPriceWithLeadingSpace.substring(1);
         Float price = Float.valueOf(stringPrice);
 
         Date date = new Date();
         date.setTime(Long.valueOf(timestampInMills));
-        String dateString = new SimpleDateFormat("MM/yyyy").format(date);
+        String dateString = new SimpleDateFormat(PATTERN_DATE).format(date);
 
         dates.add(dateString);
         prices.add(new Entry(x, price));
@@ -126,9 +130,7 @@ public class DetailsActivity extends AppCompatActivity
 
     XAxis xAxis = mLineChart.getXAxis();
     xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-    xAxis.setTextSize(11f);
     xAxis.setTextColor(Color.WHITE);
-
     IAxisValueFormatter formatter = new IAxisValueFormatter() {
       @Override public String getFormattedValue(float value, AxisBase axis) {
         return dates.get((int) value);

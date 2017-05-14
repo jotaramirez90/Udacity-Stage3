@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity
     StockAdapter.StockAdapterOnClickHandler {
 
   private static final int STOCK_LOADER = 0;
+  private static final String TAG_DIALOG = "StockDialogFragment";
+
   @SuppressWarnings("WeakerAccess") @BindView(R.id.recycler_view) RecyclerView stockRecyclerView;
   @SuppressWarnings("WeakerAccess") @BindView(R.id.swipe_refresh) SwipeRefreshLayout
       swipeRefreshLayout;
@@ -101,7 +103,7 @@ public class MainActivity extends AppCompatActivity
   }
 
   public void button(@SuppressWarnings("UnusedParameters") View view) {
-    new AddStockDialog().show(getFragmentManager(), "StockDialogFragment");
+    new AddStockDialog().show(getFragmentManager(), TAG_DIALOG);
   }
 
   void addStock(final String symbol) {
@@ -118,8 +120,8 @@ public class MainActivity extends AppCompatActivity
           PrefUtils.addStock(MainActivity.this, symbol);
           QuoteSyncJob.syncImmediately(MainActivity.this);
         } else {
-          Toast.makeText(MainActivity.this,
-              getString(R.string.error_no_stock_exits) + ": " + symbol, Toast.LENGTH_SHORT).show();
+          Toast.makeText(MainActivity.this, getString(R.string.error_no_stock_exits) + symbol,
+              Toast.LENGTH_SHORT).show();
         }
       }
     });

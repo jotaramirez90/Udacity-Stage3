@@ -52,8 +52,9 @@ public class StockWidgetRemoteViewsService extends RemoteViewsService {
             data.getString(data.getColumnIndex(Contract.Quote.COLUMN_SYMBOL)));
         views.setTextViewText(R.id.price,
             data.getString(data.getColumnIndex(Contract.Quote.COLUMN_PRICE)));
-        views.setTextViewText(R.id.change, percentage + "%");
-        views.setInt(R.id.change, "setBackgroundResource",
+        views.setTextViewText(R.id.change,
+            percentage + getResources().getString(R.string.details_percentage));
+        views.setInt(R.id.change, getResources().getString(R.string.widget_resource_background),
             percentage > 0 ? R.drawable.percent_change_pill_green
                 : R.drawable.percent_change_pill_red);
 

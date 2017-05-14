@@ -2,36 +2,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#09C"
+    android:background="@color/material_blue_500"
     android:padding="@dimen/widget_margin"
     android:id="@+id/widget_stock"
+    android:orientation="vertical"
     >
 
-  <LinearLayout
+  <ListView
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:orientation="vertical"
-      >
+      android:divider="@null"
+      android:dividerHeight="0dp"
+      tools:listitem="@layout/list_item_quote"
+      android:id="@+id/lv_widget"
+      />
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="@null"
-        android:dividerHeight="0dp"
-        tools:listitem="@layout/list_item_quote"
-        android:id="@+id/lv_widget"
-        />
-
-    <TextView
-        android:id="@+id/tv_widget"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:fontFamily="sans-serif-condensed"
-        android:textAppearance="?android:textAppearanceLarge"
-        android:text="@string/widget_no_stock"
-        />
-
-  </LinearLayout>
+  <TextView
+      android:id="@+id/tv_widget"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:gravity="center"
+      android:fontFamily="sans-serif-condensed"
+      android:textAppearance="?android:textAppearanceLarge"
+      android:text="@string/widget_no_stock"
+      />
 
 </LinearLayout>
