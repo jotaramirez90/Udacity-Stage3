@@ -1,6 +1,10 @@
 # Udacity-Stage3
 Stage 3: Stock Hawk
 
+<img src="art/main.png" width="200px" height="356px" />
+<img src="art/details.png" width="200px" height="356px" />
+<img src="art/add.png" width="200px" height="356px" />
+<img src="art/widget.png" width="200px" height="356px" />
 
 # Meets Expecifications
 The app will:
